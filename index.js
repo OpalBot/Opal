@@ -79,7 +79,7 @@ Bot.on("message", async (message) => {
 			break;
 
 		default:
-			// get module
+			if (Util.keys(Commands).includes(command)) Commands[command](message);
 	}
 });
 
