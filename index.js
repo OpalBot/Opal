@@ -12,3 +12,12 @@ Moment.locale();
 
 // util
 const Util = new _util(Moment);
+
+//// events
+// bot ready
+Bot.on("ready", () => {
+	Util.log(`Connected to ${Bot.guilds} servers`);
+});
+
+//// login
+Bot.login(require("./token.json").token);
