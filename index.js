@@ -1,16 +1,14 @@
 //// import modules
-const discord = require("discord.js");
-const moment = require("moment");
+const Discord = require("discord.js");
+const Moment = require("moment");
+const _util = require("./src/util");
 
 //// initialize
 // discord.js
-const bot = new discord.Client();
+const Bot = new Discord.Client();
 
 // moment
-moment.locale();
+Moment.locale();
 
-//// functions
-// log
-function log(text) {
-	console.log(moment().format('LTS') + ' | ' + text);
-}
+// util
+const Util = new _util(Moment);
