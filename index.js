@@ -21,7 +21,7 @@ Bot.on("ready", () => {
 });
 
 // bot command
-Bot.on("message", (message) => {
+Bot.on("message", async (message) => {
 	if (message.author.bot) return;
 	if (!message.content.startsWith(Config.Prefix)) return;
 
@@ -30,6 +30,20 @@ Bot.on("message", (message) => {
 	args.shift();
 
 	Util.log(`${Config.Prefix}${command} FROM ${message.author.username} IN ${message.guild.name} (${message.author.id} SENT IN ${message.guild.id})`);
+
+	switch (command) {
+		case "ping":
+			message.channel.send(":ping_pong: Pinging...").then((m) => {
+				let botPing = `**Bot** ${m.createdTimestamp - message.createdTimestamp}ms`;
+				let apiPing = `**API** ${Math.round(Bot.ping)}ms`;
+
+				m.edit(`:ping_pong: ${botPing} ${apiPing}`);
+			});
+			break;
+
+		default:
+			// get module
+	}
 });
 
 //// login
