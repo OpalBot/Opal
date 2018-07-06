@@ -1,9 +1,12 @@
 //// import modules
 const Discord = require("discord.js");
 const Moment = require("moment");
-const FS = require("fs");
+const fs = require("fs");
 const Config = require("./src/config.json");
 const _util = require("./src/util");
+
+//// variables
+var Commands = {};
 
 //// initialize
 // discord.js
@@ -18,7 +21,23 @@ const Util = new _util(Moment);
 //// events
 // bot ready
 Bot.on("ready", () => {
-	Util.log(`Connected to ${Bot.guilds.size} servers`);
+	fs.readdir("bot_modules", "utf8", (err, data) => {
+		if (err) throw new Error(err);
+
+		data.forEach((file) => {
+			if (file != "framework.js") {
+				let module = require(`./bot_modules/${file.substring(0, file.length - 3)}`);
+
+				Util.keys(module.commands).forEach((command) => {
+					Commands[command] = module.commands[command];
+				}); 
+
+				console.log(`:: LOADED ${file.substring(0, 1).toUpperCase()}${file.substring(1, file.length - 3)}`);
+			}
+		});
+
+		Util.log(`Connected to ${Bot.guilds.size} servers`);
+	});
 });
 
 // bot command
@@ -43,7 +62,7 @@ Bot.on("message", async (message) => {
 			break;
 
 		case "modules":
-			FS.readdir("bot_modules", "utf8", (err, data) => {
+			fs.readdir("bot_modules", "utf8", (err, data) => {
 				if (err) return message.channel.send(`ERROR: ${err.message}`);
 
 				let modules = "";
