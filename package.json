@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/OpalBot/Opal/issues"
   },
-  "homepage": "https://github.com/OpalBot/Opal#readme"
+  "homepage": "https://github.com/OpalBot/Opal#readme",
+  "dependencies": {
+    "discord.js": "^11.3.2"
+  }
 }
