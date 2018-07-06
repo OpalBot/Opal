@@ -1,6 +1,7 @@
 //// import modules
 const Discord = require("discord.js");
 const Moment = require("moment");
+const FS = require("fs");
 const Config = require("./src/config.json");
 const _util = require("./src/util");
 
@@ -38,6 +39,23 @@ Bot.on("message", async (message) => {
 				let apiPing = `**API** ${Math.round(Bot.ping)}ms`;
 
 				m.edit(`:ping_pong: ${botPing} ${apiPing}`);
+			});
+			break;
+
+		case "modules":
+			FS.readdir("bot_modules", "utf8", (err, data) => {
+				if (err) return message.channel.send(`ERROR: ${err.message}`);
+
+				let modules = "";
+				data.forEach((file) => {
+					modules += `${file.substring(0, 1).toUpperCase()}${file.substring(1, file.length - 3)}\n`;
+				});
+
+				let embed = new Discord.RichEmbed()
+					.setTitle("Modules")
+					.setDescription(modules);
+
+				message.channel.send(embed);
 			});
 			break;
 
